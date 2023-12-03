@@ -1,0 +1,8 @@
+#!/bin/bash
+set -euo pipefail
+
+# prepare bin packages in dist
+# expects python with installed dependencies
+# required param: version
+
+pyinstaller --collect-data grapheme --onefile test --name test-windows

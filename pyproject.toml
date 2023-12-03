@@ -1,0 +1,33 @@
+[build-system]
+requires = [
+    "setuptools==69.0.2",
+    "wheel==0.42.0",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+version="0.0.1"
+name = "pbar"
+description = "testing progress bar for icloudpd"
+readme = "README.md"
+requires-python = ">=3.8,<=3.12"
+keywords = ["progress"]
+license = {file="LICENSE.md"}
+authors=[
+    {name = "Andrey Nikiforov"}
+]
+classifiers = [
+    "Intended Audience :: End Users/Desktop",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+]
+dependencies = [
+    "alive-progress==3.1.5",
+    "tqdm==4.66.1",
+    "pyinstaller==5.13.2",
+]
+
+[project.urls]
+Homepage="https://github.com/AndreyNikiforov/pbar"
+

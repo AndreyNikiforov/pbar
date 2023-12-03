@@ -1,0 +1,17 @@
+build/
+dist/
+wheelhouse/
+*.egg-info
+.vscode
+__pycache__
+.pytest_cache
+.cache
+*.pyc
+.idea
+.coverage
+.coverage.*
+htmlcov
+*.whl
+.venv
+venv
+*.spec

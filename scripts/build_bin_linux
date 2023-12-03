@@ -1,0 +1,8 @@
+#!/bin/bash
+set -euo pipefail
+
+# prepare npm packages in dist
+# expects dist to have comipled binary versions
+# required param: version
+
+pyinstaller --collect-data grapheme --onefile test.py --name test-linux

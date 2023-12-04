@@ -6,3 +6,4 @@ set -euo pipefail
 # required param: version
 
 pyinstaller --collect-data grapheme --onefile test.py --name test-linux
+pyinstaller --onefile test_no_click.py --name test-no-click-linux

@@ -1,4 +1,6 @@
 # works
+from multiprocessing import freeze_support, RLock
+freeze_support()
 
 import logging
 import time
@@ -6,8 +8,8 @@ import click
 import alive_progress
 from rich.progress import track
 from rich.logging import RichHandler
-from multiprocessing import freeze_support, RLock
 import warnings
+import sys
 
 @click.group()
 def commands():
@@ -47,7 +49,7 @@ def tqdm_main(logging_redirect, filter_warnings, freeze_mp, rlock):
     """tqdm as in icloupd"""
 
     # works (resizing rearranges already printed log and bar is spilling into the log on resizing)
-    logging.basicConfig(level=logging.DEBUG, format="%(asctime)s %(levelname)-8s %(message)s", datefmt="%Y-%m-%d %H:%M:%S")
+    logging.basicConfig(level=logging.DEBUG, format="%(asctime)s %(levelname)-8s %(message)s", datefmt="%Y-%m-%d %H:%M:%S", stream=sys.stdout)
     logger = logging.getLogger("icloudpd")
     if (filter_warnings):
         warnings.filterwarnings("ignore")
@@ -85,7 +87,7 @@ def alive_main():
     """alive.progress"""
 
     # works (resizing rearranges already printed log and bar is spilling into the log on resizing)
-    logging.basicConfig(level=logging.DEBUG, format="%(asctime)s %(levelname)-8s %(message)s", datefmt="%Y-%m-%d %H:%M:%S")
+    logging.basicConfig(level=logging.DEBUG, format="%(asctime)s %(levelname)-8s %(message)s", datefmt="%Y-%m-%d %H:%M:%S", stream=sys.stdout)
     logger = logging.getLogger("icloudpd")
     for i in alive_progress.alive_it(
         range(1,100), 
@@ -114,7 +116,10 @@ def rich_main(custom_logger, no_progress):
     """rich.progress"""
 
     # works (resizing rearranges already printed log and bar is spilling into the log on resizing)
-    logging.basicConfig(level=logging.DEBUG, format="%(asctime)s %(levelname)-8s %(message)s", datefmt="%Y-%m-%d %H:%M:%S", handlers=[RichHandler()] if custom_logger else None)
+    if (custom_logger):
+        logging.basicConfig(level=logging.DEBUG, format="%(asctime)s %(levelname)-8s %(message)s", datefmt="%Y-%m-%d %H:%M:%S", handlers=[RichHandler(omit_repeated_times=False, show_path=False)])
+    else:
+        logging.basicConfig(level=logging.DEBUG, format="%(asctime)s %(levelname)-8s %(message)s", datefmt="%Y-%m-%d %H:%M:%S", stream=sys.stdout)
     logger = logging.getLogger("icloudpd")
     for i in track(
         range(1,100), 

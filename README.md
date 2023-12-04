@@ -24,3 +24,7 @@ Should not report threading/multi process errors
 
 - Lin/Win/Mac
 - src/packaged in binary
+
+## TODO
+
+`icloudpd` fails and throws exceptions on ctrl-c, while this test does not. Adding http calls may be needed to repro

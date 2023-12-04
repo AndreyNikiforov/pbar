@@ -2,13 +2,12 @@
 
 import logging
 import time
-from tqdm.contrib.logging import logging_redirect_tqdm
-import tqdm
 import click
 import alive_progress
 from rich.progress import track
 from rich.logging import RichHandler
 from multiprocessing import freeze_support, RLock
+import warnings
 
 @click.group()
 def commands():
@@ -30,6 +29,11 @@ def commands():
     default=True
 )
 @click.option(
+    "--filter-warnings",
+    help="Call filterwarnings() or not",
+    default=False
+)
+@click.option(
     "--freeze-mp",
     help="Call multiprocessor.freeze_support() or not",
     default=False
@@ -39,18 +43,23 @@ def commands():
     help="Call multiprocessor.RLock() or not",
     default=False
 )
-def tqdm_main(logging_redirect, freeze_mp, rlock):
+def tqdm_main(logging_redirect, filter_warnings, freeze_mp, rlock):
     """tqdm as in icloupd"""
 
     # works (resizing rearranges already printed log and bar is spilling into the log on resizing)
     logging.basicConfig(level=logging.DEBUG, format="%(asctime)s %(levelname)-8s %(message)s", datefmt="%Y-%m-%d %H:%M:%S")
     logger = logging.getLogger("icloudpd")
+    if (filter_warnings):
+        warnings.filterwarnings("ignore")
     if (freeze_mp):
         freeze_support()
     if (rlock):
         RLock()
 
+    import tqdm
+
     if (logging_redirect):
+        from tqdm.contrib.logging import logging_redirect_tqdm
         with logging_redirect_tqdm():
             for i in tqdm.tqdm(range(1,100), 
                         dynamic_ncols=True,

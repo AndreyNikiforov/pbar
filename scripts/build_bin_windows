@@ -5,4 +5,4 @@ set -euo pipefail
 # expects python with installed dependencies
 # required param: version
 
-pyinstaller --collect-data grapheme --onefile test --name test-windows
+pyinstaller --collect-data grapheme --onefile test.py --name test-windows

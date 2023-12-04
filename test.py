@@ -105,18 +105,20 @@ def alive_main():
     help="Use custom logging handler or not",
     default=False
 )
-def rich_main(custom_logger):
+@click.option(
+    "--no-progress",
+    help="Disable progress bar",
+    default=False
+)
+def rich_main(custom_logger, no_progress):
     """rich.progress"""
 
     # works (resizing rearranges already printed log and bar is spilling into the log on resizing)
-    if (custom_logger):
-        logging.basicConfig(level=logging.DEBUG, format="%(asctime)s %(levelname)-8s %(message)s", datefmt="%Y-%m-%d %H:%M:%S", handlers=[RichHandler()])
-    else:
-        logging.basicConfig(level=logging.DEBUG, format="%(asctime)s %(levelname)-8s %(message)s", datefmt="%Y-%m-%d %H:%M:%S")
+    logging.basicConfig(level=logging.DEBUG, format="%(asctime)s %(levelname)-8s %(message)s", datefmt="%Y-%m-%d %H:%M:%S", handlers=[RichHandler()] if custom_logger else None)
     logger = logging.getLogger("icloudpd")
     for i in track(
         range(1,100), 
-        ):
+        ) if not no_progress else range(1,100):
     # for i in range(1,10):
         logger.debug(f"Before Value is {i}")
         time.sleep(1)

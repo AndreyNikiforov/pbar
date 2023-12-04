@@ -8,7 +8,7 @@ import click
 import alive_progress
 from rich.progress import track
 from rich.logging import RichHandler
-from multiprocessing import freeze_support
+from multiprocessing import freeze_support, RLock
 
 @click.group()
 def commands():
@@ -34,7 +34,12 @@ def commands():
     help="Call multiprocessor.freeze_support() or not",
     default=False
 )
-def tqdm_main(logging_redirect, freeze_mp):
+@click.option(
+    "--rlock",
+    help="Call multiprocessor.RLock() or not",
+    default=False
+)
+def tqdm_main(logging_redirect, freeze_mp, rlock):
     """tqdm as in icloupd"""
 
     # works (resizing rearranges already printed log and bar is spilling into the log on resizing)
@@ -42,6 +47,8 @@ def tqdm_main(logging_redirect, freeze_mp):
     logger = logging.getLogger("icloudpd")
     if (freeze_mp):
         freeze_support()
+    if (rlock):
+        RLock()
 
     if (logging_redirect):
         with logging_redirect_tqdm():

@@ -7,7 +7,7 @@ pip3 install -e .
 
 Run
 ```shell
-python3 test.py
+python3 test.py --help
 ```
 
 # Things to check

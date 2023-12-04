@@ -26,6 +26,8 @@ dependencies = [
     "alive-progress==3.1.5",
     "tqdm==4.66.1",
     "pyinstaller==5.13.2",
+    "click==8.1.6",
+    "rich==13.7.0",
 ]
 
 [project.urls]
